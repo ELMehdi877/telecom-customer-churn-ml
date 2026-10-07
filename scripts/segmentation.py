@@ -8,12 +8,18 @@ from sklearn.cluster import AgglomerativeClustering
 from sklearn.metrics import silhouette_score, davies_bouldin_score, calinski_harabasz_score
 from sklearn.decomposition import PCA
 
+
+print("============================ start ============================")
 # --- 1. Chargement des données prétraitées ---
 # Définition du chemin relatif vers le fichier de données nettoyées
 Base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 path_nettoyage = os.path.join(Base_path, "data/nettoyage/data_nettoyage.csv")
 
 df = pd.read_csv(path_nettoyage)
+
+# Création du dossier de destination s'il n'existe pas
+data_cluster = "data/clusters"
+os.makedirs(data_cluster, exist_ok=True)
 
 # --- 2. Préparation de la matrice de features ---
 # Exclusion de la variable cible 'Churn'
@@ -211,3 +217,6 @@ plt.xlabel("Composante 1")
 plt.ylabel("Composante 2")
 plt.title("Visualisation des Clusters avec PCA")
 plt.show()
+
+path_clusters = os.path.join(data_cluster, "data_clusters.csv")
+df.to_csv(path_clusters)
